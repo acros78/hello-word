@@ -36,11 +36,11 @@ CREATE TABLE `accesorios` (
   PRIMARY KEY (`id_acc`),
   KEY `id_marca` (`id_marca`),
   CONSTRAINT `accesorios_ibfk_2` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `accesorios` */
 
-insert  into `accesorios`(`id_acc`,`nombre_acce`,`id_marca`,`interfaz`,`canales_audio`,`conpatibilidad`,`dimension`,`peso`,`diseño`,`tipo_t`,`frecuencia`,`activo`) values (3,'audionos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(6,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(7,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(8,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(9,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1);
+insert  into `accesorios`(`id_acc`,`nombre_acce`,`id_marca`,`interfaz`,`canales_audio`,`conpatibilidad`,`dimension`,`peso`,`diseño`,`tipo_t`,`frecuencia`,`activo`) values (3,'audionos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(6,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(7,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(8,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(9,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(10,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no','no aplica','no aplica','no aplica',1);
 
 /*Table structure for table `clientes` */
 
@@ -98,13 +98,10 @@ CREATE TABLE `gabinete` (
   `dimension` varchar(30) DEFAULT NULL,
   `peso` varchar(20) DEFAULT NULL,
   `leds` varchar(50) DEFAULT NULL,
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_gab`),
   KEY `id_marca` (`id_marca`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `gabinete_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `gabinete_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `gabinete_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `gabinete` */
@@ -130,14 +127,14 @@ DROP TABLE IF EXISTS `inventario`;
 
 CREATE TABLE `inventario` (
   `id_inventario` int(11) NOT NULL AUTO_INCREMENT,
-  `id_producto` int(11) DEFAULT NULL,
-  `tabla` varchar(10) DEFAULT NULL,
+  `id_pro` int(11) DEFAULT NULL COMMENT 'ide de las tablas de productos',
+  `letra_pro` varchar(10) DEFAULT NULL COMMENT 'identificador de tablas',
   `cantidad` int(11) DEFAULT NULL,
   `precio_compra` double DEFAULT NULL,
   `precio_venta` double DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_inventario`),
-  KEY `id_producto` (`id_producto`)
+  KEY `id_producto` (`id_pro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `inventario` */
@@ -165,7 +162,7 @@ CREATE TABLE `marca` (
   `logo` varchar(200) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 /*Data for the table `marca` */
 
@@ -182,13 +179,10 @@ CREATE TABLE `memoriaram` (
   `latencia` varchar(50) DEFAULT NULL,
   `voltaje` varchar(10) DEFAULT NULL,
   `id_marca` int(11) DEFAULT NULL,
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_memoria`),
   KEY `id_marca` (`id_marca`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `memoriaram_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `memoriaram_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `memoriaram_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `memoriaram` */
@@ -218,13 +212,10 @@ CREATE TABLE `monitor` (
   `aud_mon` int(11) DEFAULT NULL COMMENT 'Entrada de Audio (3.5mm)',
   `ene_mon` varchar(20) DEFAULT NULL COMMENT 'Entrada de Energía',
   `con_mon` varchar(20) DEFAULT NULL COMMENT 'Consumo de Energía',
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_mon`),
   KEY `id_mar` (`id_mar`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `monitor_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `monitor_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `monitor_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `monitor` */
@@ -237,15 +228,12 @@ CREATE TABLE `pc` (
   `id_pc` int(11) NOT NULL AUTO_INCREMENT,
   `id_marca` int(11) DEFAULT NULL,
   `id_linea` int(11) DEFAULT NULL,
-  `id_inventario` int(11) DEFAULT NULL,
   `detalle` text,
   PRIMARY KEY (`id_pc`),
   KEY `id_marca` (`id_marca`),
   KEY `id_linea` (`id_linea`),
-  KEY `id_inventario` (`id_inventario`),
   CONSTRAINT `pc_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `pc_ibfk_2` FOREIGN KEY (`id_linea`) REFERENCES `linea` (`id_linea`),
-  CONSTRAINT `pc_ibfk_3` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `pc_ibfk_2` FOREIGN KEY (`id_linea`) REFERENCES `linea` (`id_linea`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `pc` */
@@ -257,7 +245,7 @@ DROP TABLE IF EXISTS `procesador`;
 CREATE TABLE `procesador` (
   `id_proc` int(11) NOT NULL AUTO_INCREMENT,
   `id_marca` int(11) DEFAULT NULL,
-  `id_linea` int(11) NOT NULL,
+  `id_linea` int(11) DEFAULT NULL,
   `modelo` varchar(100) DEFAULT NULL,
   `generacion` varchar(50) DEFAULT NULL,
   `velocidad` varchar(50) DEFAULT NULL,
@@ -273,17 +261,14 @@ CREATE TABLE `procesador` (
   `hyper_transport` varchar(2) DEFAULT NULL,
   `tdp` varchar(20) DEFAULT NULL,
   `disipador` int(11) DEFAULT NULL,
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   `id_soket` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_proc`),
   KEY `id_marca` (`id_marca`),
   KEY `id_linea` (`id_linea`),
-  KEY `id_inventario` (`id_inventario`),
   KEY `id_soket` (`id_soket`),
   CONSTRAINT `procesador_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
   CONSTRAINT `procesador_ibfk_2` FOREIGN KEY (`id_linea`) REFERENCES `linea` (`id_linea`),
-  CONSTRAINT `procesador_ibfk_3` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`),
   CONSTRAINT `procesador_ibfk_4` FOREIGN KEY (`id_soket`) REFERENCES `soket` (`id_soket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -315,13 +300,10 @@ CREATE TABLE `psu` (
   `con_pod` varchar(50) DEFAULT NULL COMMENT 'Conectores',
   `dim_pod` varchar(20) DEFAULT NULL COMMENT 'dimension',
   `pes_pod` varchar(20) DEFAULT NULL COMMENT 'peso',
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_fp`),
   KEY `id_mar` (`id_mar`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `psu_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `psu_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `psu_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `psu` */
@@ -334,6 +316,7 @@ CREATE TABLE `soket` (
   `id_soket` int(11) NOT NULL AUTO_INCREMENT,
   `soket` varchar(100) DEFAULT NULL,
   `generacion` varchar(100) DEFAULT NULL,
+  `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_soket`),
   KEY `id_pro` (`soket`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -407,13 +390,10 @@ CREATE TABLE `tarjeta_video` (
   `dvi` varchar(10) DEFAULT NULL,
   `vga` varchar(10) DEFAULT NULL,
   `displayport` varchar(10) DEFAULT NULL,
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_tv`),
   KEY `id_marca` (`id_marca`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `tarjeta_video_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `tarjeta_video_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `tarjeta_video_ibfk_1` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tarjeta_video` */
@@ -437,13 +417,10 @@ CREATE TABLE `tred` (
   `con_tred` varchar(30) DEFAULT NULL COMMENT 'Tipo(s) de Conector(es)',
   `com_tred` varchar(50) DEFAULT NULL COMMENT 'Compatibilidad',
   `pes_tred` varchar(30) DEFAULT NULL COMMENT 'peso',
-  `id_inventario` int(11) DEFAULT NULL,
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_tred`),
   KEY `id_mar` (`id_mar`),
-  KEY `id_inventario` (`id_inventario`),
-  CONSTRAINT `tred_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`),
-  CONSTRAINT `tred_ibfk_2` FOREIGN KEY (`id_inventario`) REFERENCES `inventario` (`id_inventario`)
+  CONSTRAINT `tred_ibfk_1` FOREIGN KEY (`id_mar`) REFERENCES `marca` (`id_marca`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tred` */
