@@ -36,11 +36,11 @@ CREATE TABLE `accesorios` (
   PRIMARY KEY (`id_acc`),
   KEY `id_marca` (`id_marca`),
   CONSTRAINT `accesorios_ibfk_2` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `accesorios` */
 
-insert  into `accesorios`(`id_acc`,`nombre_acce`,`id_marca`,`interfaz`,`canales_audio`,`conpatibilidad`,`dimension`,`peso`,`diseño`,`tipo_t`,`frecuencia`,`activo`) values (3,'audionos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(6,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(7,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(8,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(9,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(10,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no','no aplica','no aplica','no aplica',1);
+insert  into `accesorios`(`id_acc`,`nombre_acce`,`id_marca`,`interfaz`,`canales_audio`,`conpatibilidad`,`dimension`,`peso`,`diseño`,`tipo_t`,`frecuencia`,`activo`) values (3,'audionos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(6,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(7,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica','no aplica',1),(8,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(9,'audifonos',13,'no aplica','no','no','no','no','no','no','no',1),(10,'audifonos',13,'no aplica','no aplica','no aplica','no aplica','no','no aplica','no aplica','no aplica',1),(11,'audifonos',13,'','','','','','','','',1),(12,'asddas',13,'','','','','','','','',1),(13,'asddas',13,'','','','','','','','',1),(14,'asddas',13,'','','','','','','','',1),(15,'audifonos',13,'no aplica','','','','','','','',1),(16,'audifonos',13,'no aplica','','','','','','','',1),(17,'audifonos',13,'','','','','','','','',1),(18,'audifonos',13,'','','','','','','','',1),(19,'audifonos',13,'','','','','','','','',1),(20,'audifonos',13,'','','','','','','','',1),(21,'audifonos',13,'','','','','','','','',1),(22,'audifonos',13,'','','','','','','','',1),(23,'audifonos',13,'','','','','','','','',1);
 
 /*Table structure for table `clientes` */
 
@@ -112,14 +112,16 @@ DROP TABLE IF EXISTS `imagenes`;
 
 CREATE TABLE `imagenes` (
   `id_imag` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tabla` int(11) DEFAULT NULL,
-  `tabla` varchar(2) DEFAULT NULL,
-  `imagen` varchar(255) DEFAULT NULL,
+  `id_pro` int(11) DEFAULT NULL COMMENT 'ide del producto',
+  `letra_pro` varchar(2) DEFAULT NULL COMMENT 'letra de tabla del producto',
+  `imagen` varchar(255) DEFAULT NULL COMMENT 'imagen del producto',
   `activo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_imag`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `imagenes` */
+
+insert  into `imagenes`(`id_imag`,`id_pro`,`letra_pro`,`imagen`,`activo`) values (2,22,'A','large3.jpg',1),(3,22,'A','petstar-planta-_43311.jpg',1),(4,22,'A','etiketa_24.jpg',1),(5,23,'A','etiketa_25.jpg',1),(6,23,'A','etiketa2.png',1);
 
 /*Table structure for table `inventario` */
 
@@ -536,6 +538,31 @@ BEGIN
     1
   ) ;
 	
+    END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `alta_imag` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `alta_imag` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `alta_imag`(IN id_pro_in INT ,IN letra_pro_in VARCHAR(2),IN imagen_in VARCHAR(250))
+BEGIN
+	INSERT INTO `assemble`.`imagenes` (
+  
+  `id_pro`,
+  `letra_pro`,
+  `imagen`,
+  `activo`
+) 
+VALUES
+  (
+    id_pro_in,
+    letra_pro_in,
+    imagen_in,
+    1
+  ) ;
     END */$$
 DELIMITER ;
 
